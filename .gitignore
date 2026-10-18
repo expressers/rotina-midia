@@ -3,3 +3,6 @@ dist
 .DS_Store
 *.local
 .taste-skill
+.impeccable/review
+.impeccable/build
+.impeccable/config.local.json
