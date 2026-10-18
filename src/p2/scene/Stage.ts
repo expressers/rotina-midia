@@ -15,7 +15,7 @@ const BRAND_RED = new THREE.Color(0.75, 0.031, 0.067)
 
 type V3 = [number, number, number]
 type Station = { t: number; pos: V3; look: V3 }
-type Screen = { mesh: THREE.Mesh; mat: THREE.ShaderMaterial; near: number; far: number; on: number; wake: number }
+type Screen = { mesh: THREE.Mesh; mat: THREE.ShaderMaterial; near: number; far: number; on: number; wake: number; fadeNear: boolean }
 
 const smooth = (a: number, b: number, x: number) => {
   const t = Math.min(1, Math.max(0, (x - a) / (b - a)))
@@ -123,7 +123,7 @@ export class Stage {
     return t
   }
 
-  private screen(name: string, w: number, aspect: number, opts: { near: number; far: number; wake: number; res?: 720 | 1280; seed?: number }) {
+  private screen(name: string, w: number, aspect: number, opts: { near: number; far: number; wake: number; res?: 720 | 1280; seed?: number; fadeNear?: boolean }) {
     const h = w / aspect
     const mat = new THREE.ShaderMaterial({
       vertexShader: frameVertex,
@@ -135,8 +135,10 @@ export class Stage {
         uTime: { value: 0 },
         uSeed: { value: opts.seed ?? Math.random() },
         uCover: { value: new THREE.Vector2(1, 1) },
+        uAlpha: { value: 1 },
       },
       side: THREE.DoubleSide,
+      transparent: true,
     })
     // Image is 16:9; screens with other aspects crop like object-fit: cover.
     const imgAspect = name.includes('scope') ? 2.39 : 16 / 9
@@ -145,7 +147,7 @@ export class Stage {
     else cover.set(aspect / imgAspect, 1)
     mat.uniforms.uCover.value = cover
     const mesh = new THREE.Mesh(new THREE.PlaneGeometry(w, h), mat)
-    this.screens.push({ mesh, mat, near: opts.near, far: opts.far, on: 0, wake: opts.wake })
+    this.screens.push({ mesh, mat, near: opts.near, far: opts.far, on: 0, wake: opts.wake, fadeNear: opts.fadeNear ?? true })
     return mesh
   }
 
@@ -226,7 +228,7 @@ export class Stage {
     LUANDA_TILES.forEach((name, i) => {
       const c = i % cols
       const r = Math.floor(i / cols)
-      const m = this.screen(name, w, 16 / 9, { near: 6, far: 18, wake: 24, seed: i / 9 })
+      const m = this.screen(name, w, 16 / 9, { near: 6, far: 18, wake: 24, seed: i / 9, fadeNear: false })
       m.rotation.x = -Math.PI / 2
       m.position.set((c - 1) * (w + gap), floorY, start - r * (h + gap) - h / 2)
       this.scene.add(m)
@@ -236,7 +238,7 @@ export class Stage {
     SP_TILES.forEach((name, i) => {
       const c = i % cols
       const r = Math.floor(i / cols)
-      const m = this.screen(name, w, 16 / 9, { near: 6, far: 18, wake: 26, seed: 0.5 + i / 9 })
+      const m = this.screen(name, w, 16 / 9, { near: 6, far: 18, wake: 26, seed: 0.5 + i / 9, fadeNear: false })
       m.rotation.x = -Math.PI / 2
       m.position.set((c - 1) * (w + gap), floorY, -(r * (h + gap) + h / 2))
       this.fold.add(m)
@@ -287,7 +289,7 @@ export class Stage {
       look: [FILM_X[i] * (portrait ? 1.05 : 0.95), 0, FILM_Z[i]],
     }))
     this.stations = [
-      { t: T.intro, pos: [0, 0, 13 * Math.min(back, 1.6)], look: [0, 0, 0] },
+      { t: T.intro, pos: [0, 0, 16 * Math.min(back, 1.4)], look: [0, 0, 0] },
       { t: T.enter, pos: [0, 0, 3.4], look: [0, 0, -6] },
       { t: T.through, pos: [0, 0.1, -5], look: [0, 0, -16] },
       { t: T.rotina, pos: [0, 0.25, -19], look: [0, 0, -30] },
@@ -393,7 +395,11 @@ export class Stage {
       s.mat.uniforms.uOn.value = s.on
       s.mat.uniforms.uFocus.value = 1 - smooth(s.near, s.far, d)
       s.mat.uniforms.uTime.value = time
-      s.mesh.visible = d < 60
+      // Screens the camera is about to pass through dissolve instead of filling the lens.
+      const dz = this.camera.position.z - wp.z
+      const alpha = s.fadeNear ? smooth(0.6, 3.4, dz) : 1
+      s.mat.uniforms.uAlpha.value = alpha
+      s.mesh.visible = d < 60 && alpha > 0.01
     }
 
     this.dustMat.uniforms.uTime.value = time

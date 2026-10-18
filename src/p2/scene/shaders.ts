@@ -14,6 +14,7 @@ export const frameFragment = /* glsl */ `
   uniform float uTime;
   uniform float uSeed;
   uniform vec2 uCover; // uv scale to emulate object-fit: cover
+  uniform float uAlpha;
   varying vec2 vUv;
 
   void main() {
@@ -36,7 +37,7 @@ export const frameFragment = /* glsl */ `
     // Projector flicker, very small.
     c *= 0.985 + 0.015 * sin(uTime * 37.0 + uSeed * 91.0);
 
-    gl_FragColor = vec4(c, 1.0);
+    gl_FragColor = vec4(c, uAlpha);
   }
 `
 
