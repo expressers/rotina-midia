@@ -4,6 +4,11 @@ let instance: Lenis | null = null
 
 export const getLenis = () => instance
 
+/** Register a Lenis instance created elsewhere (Proposta 2 drives Lenis from the GSAP ticker). */
+export function setLenis(l: Lenis | null) {
+  instance = l
+}
+
 export function startLenis() {
   if (instance) return instance
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return null

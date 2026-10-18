@@ -1,8 +1,8 @@
 import { useRef, type RefObject } from 'react'
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { Play } from '@phosphor-icons/react'
-import { features, srcSet, type Feature } from '../data'
-import { usePlayer } from '../player'
+import { features, srcSet, type Feature } from '../../shared/data'
+import { usePlayer } from '../../shared/player'
 
 export function Works() {
   const refs = useRef<(HTMLElement | null)[]>([])

@@ -3,7 +3,7 @@
 @import "@fontsource/barlow/latin-500.css";
 @import "tailwindcss";
 
-@theme {
+@theme static {
   --color-ink: #0b0a09;
   --color-film: #1a1714;
   --color-paper: #f3efe8;

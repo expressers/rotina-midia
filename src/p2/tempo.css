@@ -1,0 +1,112 @@
+@import "@fontsource/barlow/latin-300.css";
+
+:root {
+  --open: 0;
+  --scope: 0;
+  /* Height of one bar for a 2.39:1 frame, capped so portrait phones keep a usable picture. */
+  --lb-full: clamp(0px, calc((100dvh - 100vw / 2.39) / 2), 13vh);
+  --lb-h: calc(var(--lb-full) * max(calc(1 - var(--open)), var(--scope)));
+}
+
+html.is-intro,
+html.is-intro body {
+  overflow: hidden;
+}
+
+.tempo {
+  background: #050506;
+  color: var(--color-paper);
+}
+
+.letterbox span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: var(--lb-h);
+  background: #000;
+}
+.letterbox span:first-child {
+  top: 0;
+}
+.letterbox span:last-child {
+  bottom: 0;
+}
+
+.hud {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Chapter mark: Nolan-style title card, wide tracking, quiet. */
+.chapter-mark {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.72rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--color-paper) 80%, transparent);
+  display: flex;
+  gap: 1em;
+  align-items: baseline;
+}
+.chapter-mark span {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  font-size: 1rem;
+}
+
+.statement {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: clamp(1.9rem, 4.6vw, 4.4rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  max-width: 18ch;
+  margin-inline: auto;
+  text-wrap: balance;
+  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.6);
+}
+
+.subtitle blockquote {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9), 0 0 24px rgba(0, 0, 0, 0.7);
+}
+
+.film h2 {
+  text-shadow: 0 4px 40px rgba(0, 0, 0, 0.55);
+}
+
+.credit-role {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.72rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--color-red-ink);
+  text-align: center;
+}
+
+.scrubber {
+  background: color-mix(in oklab, #050506 70%, transparent);
+  border: 1px solid color-mix(in oklab, var(--color-paper) 15%, transparent);
+  padding: 2px;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+.scrubber::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  height: 1px;
+  width: calc(var(--p, 0) * 100%);
+  background: var(--color-red);
+}
+
+@media (max-width: 639px) {
+  .scrubber {
+    bottom: calc(1rem + 3rem);
+  }
+}

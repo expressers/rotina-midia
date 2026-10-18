@@ -1,5 +1,5 @@
-import { Mark } from './Logo'
-import { goTo } from '../lenis'
+import { Mark } from '../../shared/Logo'
+import { goTo } from '../../shared/lenis'
 
 export function Footer() {
   return (

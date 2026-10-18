@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react'
 import { AnimatePresence, motion, useMotionValue, useReducedMotion, useSpring } from 'motion/react'
 import { Play } from '@phosphor-icons/react'
-import { filmography, type Film } from '../data'
-import { usePlayer } from '../player'
+import { filmography, type Film } from '../../shared/data'
+import { usePlayer } from '../../shared/player'
 
 /**
  * End-credits table. On pointer devices a still follows the cursor over rows that have one.

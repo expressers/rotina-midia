@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
-import { PlayerProvider } from './player'
-import { startLenis, stopLenis } from './lenis'
+import { PlayerProvider } from '../shared/player'
+import { startLenis, stopLenis } from '../shared/lenis'
 import { Header } from './components/Header'
 import { Hero } from './components/Hero'
 import { Works } from './components/Works'
@@ -9,6 +9,7 @@ import { Filmography } from './components/Filmography'
 import { Testimonials } from './components/Testimonials'
 import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
+import { Switcher } from '../shared/Switcher'
 
 export default function App() {
   useEffect(() => {
@@ -34,6 +35,7 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
+      <Switcher current={1} placement="right" />
     </PlayerProvider>
   )
 }

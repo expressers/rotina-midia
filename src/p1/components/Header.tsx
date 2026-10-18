@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, useMotionValueEvent, useScroll } from 'motion/react'
 import { List, X } from '@phosphor-icons/react'
-import { Logo } from './Logo'
-import { goTo } from '../lenis'
+import { Logo } from '../../shared/Logo'
+import { goTo } from '../../shared/lenis'
 
 const NAV = [
   { href: '#trabalhos', label: 'Trabalhos' },

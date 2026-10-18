@@ -1,5 +1,5 @@
 import { ArrowUpRight, EnvelopeSimple, InstagramLogo, MapPin, WhatsappLogo, YoutubeLogo } from '@phosphor-icons/react'
-import { contact, srcSet } from '../data'
+import { contact, srcSet } from '../../shared/data'
 
 export function Contact() {
   return (

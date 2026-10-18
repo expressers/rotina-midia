@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
-import { testimonials } from '../data'
+import { testimonials } from '../../shared/data'
 
 export function Testimonials() {
   const [active, setActive] = useState(0)

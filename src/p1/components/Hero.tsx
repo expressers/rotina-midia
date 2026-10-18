@@ -1,8 +1,8 @@
 import { useRef } from 'react'
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { Play } from '@phosphor-icons/react'
-import { SHOWREEL, srcSet, stripFrames } from '../data'
-import { usePlayer } from '../player'
+import { SHOWREEL, srcSet, stripFrames } from '../../shared/data'
+import { usePlayer } from '../../shared/player'
 
 const N = stripFrames.length
 const EASE = [0.23, 1, 0.32, 1] as const
