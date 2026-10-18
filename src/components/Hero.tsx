@@ -43,12 +43,12 @@ export function Hero() {
       id="top"
       ref={ref}
       aria-label="Rotina Mídia"
-      className="relative h-[230vh] [--fw:86vw] [--gap:10px] sm:h-[260vh] md:[--fw:34vw] md:[--gap:14px] lg:[--fw:30vw]"
+      className="relative h-[230vh] [--fw:86vw] [--gap:10px] sm:h-[260vh] md:[--fw:min(34vw,62vh)] md:[--gap:14px] lg:[--fw:min(30vw,62vh)]"
     >
       <div className="sticky top-0 flex h-dvh flex-col justify-between overflow-hidden pt-20 pb-6 sm:pt-24 sm:pb-8">
         <h1 className="sr-only">Rotina Mídia, da rotina ao cinema. Produtora audiovisual entre Luanda e São Paulo.</h1>
 
-        <motion.p aria-hidden style={{ x: lineLeft }} className="display px-4 text-[23vw] sm:px-8 md:text-[14vw]">
+        <motion.p aria-hidden style={{ x: lineLeft }} className="display px-4 text-[23vw] sm:px-8 md:text-[min(14vw,19vh)]">
           <motion.span className="block" {...reveal(0.15)}>
             Da rotina
           </motion.span>
@@ -65,7 +65,7 @@ export function Hero() {
             <div className="perfs h-4 w-full sm:h-5" aria-hidden />
             <div className="overflow-hidden bg-film">
               <motion.ul className="flex w-max gap-(--gap) will-change-transform" style={{ transform }}>
-                {stripFrames.map((f, i) => (
+                {stripFrames.map((f) => (
                   <li key={f.name} className="relative aspect-video w-(--fw) shrink-0 overflow-hidden bg-ink">
                     <img
                       src={`/img/${f.name}-720.webp`}
@@ -74,7 +74,7 @@ export function Hero() {
                       alt={f.alt}
                       width={1280}
                       height={720}
-                      loading={i < 4 ? 'eager' : 'lazy'}
+                      loading="eager"
                       decoding="async"
                       className="h-full w-full object-cover"
                     />
@@ -111,16 +111,16 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-4 px-4 sm:px-8 md:flex-row md:items-end md:justify-between md:gap-10">
+        <div className="flex flex-col gap-4 px-4 sm:px-8 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
           <motion.p
-            className="order-2 max-w-[34ch] text-[0.95rem] leading-snug text-dim md:order-1 md:mb-[1.2vw] md:text-base"
+            className="order-2 max-w-[34ch] text-[0.95rem] leading-snug text-dim md:text-base lg:order-1 lg:mb-[1.2vw]"
             initial={reduce ? false : { opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8, ease: EASE }}
           >
             Produtora audiovisual entre Luanda e São Paulo. Campanhas, videoclipes, corporativo e casamentos, do guião à edição.
           </motion.p>
-          <motion.p aria-hidden style={{ x: lineRight }} className="display order-1 self-end text-right text-[23vw] md:order-2 md:text-[14vw]">
+          <motion.p aria-hidden style={{ x: lineRight }} className="display order-1 self-end text-right whitespace-nowrap text-[23vw] lg:order-2 md:text-[min(14vw,19vh)]">
             <motion.span className="block" {...reveal(0.3)}>
               ao cinema.
             </motion.span>
